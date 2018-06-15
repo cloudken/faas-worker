@@ -1,0 +1,14 @@
+syntax = "proto3";
+package HbData;
+
+service Greeter {
+  rpc Call (HbRequest) returns (HbReply) {}
+}
+
+message HbRequest {}
+
+message HbReply {
+  string return_code = 1;
+  string ack = 2;
+}
+
