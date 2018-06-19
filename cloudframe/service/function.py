@@ -6,6 +6,7 @@ from cloudframe.common.utils import get_resource
 from cloudframe.protos import function_pb2
 from cloudframe.protos import function_pb2_grpc
 
+
 class FunctionServicer(function_pb2_grpc.GreeterServicer):
 
     def Call(self, request, context):
@@ -23,5 +24,5 @@ class FunctionServicer(function_pb2_grpc.GreeterServicer):
                 response = http_client.INTERNAL_SERVER_ERROR, {'result': 'error'}
         except:
             response = http_client.INTERNAL_SERVER_ERROR, {'result': 'error'}
-        
+
         return function_pb2.FunctionReply(return_code=response[0], ack=json.dumps(response[1]))

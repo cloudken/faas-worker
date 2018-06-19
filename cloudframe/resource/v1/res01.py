@@ -1,6 +1,7 @@
 
 from six.moves import http_client
 
+
 def post(tenant, req):
     ack = {'status': 'OK'}
     return http_client.OK, ack

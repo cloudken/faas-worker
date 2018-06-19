@@ -35,8 +35,9 @@ def try_import(import_str, default=None):
 
 
 def get_resource(resource_name, version):
-    res = 'cloudframe.resources.' + version + '.' + resource_name
+    res = 'cloudframe.resource.' + version + '.' + resource_name
     return import_module(res)
+
 
 def _get_root_helper():
     return 'sudo cloudframe-rootwrap %s'
