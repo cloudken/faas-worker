@@ -8,4 +8,4 @@ class MyVersionInfo(object):
         self._semantic = None
 
 
-version_info = MyVersionInfo('restframe', '0.2')
+version_info = MyVersionInfo('cloudframe', '0.2')

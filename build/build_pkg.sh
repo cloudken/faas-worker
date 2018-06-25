@@ -16,18 +16,18 @@ ver=`date +%Y%m%d`
 cd $src_path
 mkdir -p dist
 cd dist
-rm -f restframe-*.tar.gz
+rm -f cloudframe-*.tar.gz
 cd ..
 python setup.py sdist
 
 # docker build
-src_file="$src_path/dist/restframe-*.tar.gz"
+src_file="$src_path/dist/cloudframe-*.tar.gz"
 docker_img="$pkg_name:$ver"
 img_tar="$pkg_name.tar"
 rm -f $img_tar
 cd $build_path
 cd $build_dir
-rm -f restframe-*.tar.gz
+rm -f cloudframe-*.tar.gz
 cp $src_file .
 cd ..
 docker rmi $docker_img
