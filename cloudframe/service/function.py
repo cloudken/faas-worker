@@ -1,10 +1,13 @@
 
 import json
+import logging
 from six.moves import http_client
 
 from cloudframe.common.utils import get_resource
 from cloudframe.protos import function_pb2
 from cloudframe.protos import function_pb2_grpc
+
+LOG = logging.getLogger(__name__)
 
 
 class FunctionServicer(function_pb2_grpc.GreeterServicer):
@@ -21,8 +24,12 @@ class FunctionServicer(function_pb2_grpc.GreeterServicer):
             elif request.opr == 'delete':
                 response = res.delete(request.tenant, request.res_id)
             else:
+                LOG.error('Call %(resource)s, %(ver)s failed, operation %(opr)s is illegal.',
+                          {'resource': request.resource, 'ver': request.version, 'opr': request.opr})
                 response = http_client.INTERNAL_SERVER_ERROR, {'result': 'error'}
-        except:
+        except Exception as e:
+            LOG.error('Call %(resource)s, %(ver)s failed, error_info: %(error)s',
+                      {'resource': request.resource, 'ver': request.version, 'error': e})
             response = http_client.INTERNAL_SERVER_ERROR, {'result': 'error'}
 
         return function_pb2.FunctionReply(return_code=response[0], ack=json.dumps(response[1]))
