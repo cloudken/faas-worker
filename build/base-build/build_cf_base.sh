@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 cd /
 tar cvfz cf-base.tar.gz /usr

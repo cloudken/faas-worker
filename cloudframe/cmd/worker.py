@@ -26,7 +26,7 @@ import logging
 import os
 import time
 
-
+from cloudframe.common import utils
 from cloudframe.protos import heartbeat_pb2_grpc
 from cloudframe.protos import function_pb2_grpc
 from cloudframe.service.function import FunctionServicer
@@ -36,11 +36,12 @@ from cloudframe.service.heartbeat import HbServicer
 
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
-LIFE_CYCLE = 60 * 10
+LIFE_CYCLE = 60 * 60
 MAX_WORKERS = 10
 HOST_PORT = 50051
 
 os.environ.setdefault('LOG_LEVEL', 'DEBUG')
+os.environ.setdefault('LIFE_CYCLE', '30')
 loglevel_map = {
     'DEBUG': logging.DEBUG,
     'INFO': logging.INFO,
@@ -60,6 +61,7 @@ def main():
     # monkey.patch_all()
     LOG = logging.getLogger(__name__)
     LOG.debug("Starting...")
+    utils.set_start_time()
     # job.start_worker(5)
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS))
     heartbeat_pb2_grpc.add_GreeterServicer_to_server(HbServicer(), server)

@@ -1,4 +1,5 @@
 
+from datetime import datetime
 import logging
 import sys
 import uuid
@@ -35,3 +36,13 @@ def try_import(import_str, default=None):
 def get_resource(resource_name, version):
     res = 'cloudframe.resource.' + version + '.' + resource_name
     return import_module(res)
+
+
+def set_start_time():
+    global START_TIME
+    START_TIME = datetime.now()
+
+
+def get_start_time():
+    global START_TIME
+    return START_TIME
