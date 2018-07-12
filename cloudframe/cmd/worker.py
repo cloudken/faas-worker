@@ -41,7 +41,7 @@ MAX_WORKERS = 10
 HOST_PORT = 50051
 
 os.environ.setdefault('LOG_LEVEL', 'DEBUG')
-os.environ.setdefault('LIFE_CYCLE', '30')
+os.environ.setdefault('LIFE_CYCLE', '300')
 loglevel_map = {
     'DEBUG': logging.DEBUG,
     'INFO': logging.INFO,
