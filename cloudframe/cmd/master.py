@@ -4,7 +4,7 @@ import os
 import time
 
 os.environ.setdefault('LOG_LEVEL', 'DEBUG')
-os.environ.setdefault('LIFE_CYCLE', 30)
+os.environ.setdefault('LIFE_CYCLE', '30')
 loglevel_map = {
     'DEBUG': logging.DEBUG,
     'INFO': logging.INFO,
