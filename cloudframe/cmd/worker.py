@@ -20,7 +20,7 @@ The Framework Service
 """
 
 from concurrent import futures
-# from gevent import monkey
+from gevent import monkey
 import grpc
 import logging
 import os
@@ -31,10 +31,9 @@ from cloudframe.protos import heartbeat_pb2_grpc
 from cloudframe.protos import function_pb2_grpc
 from cloudframe.service.function import FunctionServicer
 from cloudframe.service.heartbeat import HbServicer
+from cloudframe.common import job
 
-# from cloudframe.common import job
-
-
+COROUTINES_NUM = 10
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 LIFE_CYCLE = 60 * 60
 MAX_WORKERS = 10
@@ -58,11 +57,12 @@ logging.basicConfig(
 
 
 def main():
-    # monkey.patch_all()
+    monkey.patch_all()
+    grpc._cython.cygrpc.init_grpc_gevent()
     LOG = logging.getLogger(__name__)
     LOG.debug("Starting...")
     utils.set_start_time()
-    # job.start_worker(5)
+    job.start_worker(COROUTINES_NUM)
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS))
     heartbeat_pb2_grpc.add_GreeterServicer_to_server(HbServicer(), server)
     function_pb2_grpc.add_GreeterServicer_to_server(FunctionServicer(), server)
